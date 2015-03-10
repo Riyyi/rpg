@@ -46,7 +46,7 @@ int main()
             }
         }
 
-        window.clear(sf::Color(0, 0, 0));
+        window.clear(sf::Color(72, 152, 72));
         window.display();
 
         timeElapsed = timer.getElapsedTime();
