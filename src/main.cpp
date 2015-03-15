@@ -1,6 +1,15 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 
+#include "inputmanager.h"
+#include "entitymanager.h"
+
+InputManager inputManager;
+
+void UpdateCollisions(Entity* entityA, Entity* entityB) {
+    std::cout << "Collisions!" << std::endl;
+}
+
 int main()
 {
     std::cout << "Hello World!" << std::endl;
@@ -17,6 +26,17 @@ int main()
     sf::Clock timer;
     sf::Time timeElapsed;
 
+    EntityManager entityManager;
+    entityManager.AddEntity("test", new Entity("data\\gfx\\test.png"));
+    entityManager.AddEntity("test", new Entity("data\\gfx\\test.png"));
+    entityManager.SetCollisionMethod(UpdateCollisions);
+
+//    Entity entity;
+//    entity.Load("data\\gfx\\test.png");
+
+//    Entity entity2;
+//    entity2.Load("data\\gfx\\test.png");
+
     // Run the program as long as the window is open
     while (window.isOpen())
     {
@@ -25,8 +45,9 @@ int main()
         while (window.pollEvent(event))
         {
             // Close window : exit
-            if (event.type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+            if (event.type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
                 window.close();
+            }
 
             // Enter fullscreen mode : key combination : Alt+Enter
             if (event.type == sf::Event::KeyPressed) {
@@ -44,9 +65,27 @@ int main()
                     }
                 }
             }
+
+            if(inputManager.IsPressed(InputManager::Left)) {
+                std::cout << "LEFT" << std::endl;
+            }
+
+            if(inputManager.IsPressed(InputManager::Down)) {
+                std::cout << "DOWN" << std::endl;
+            }
         }
 
+//        if(entity.Collision(&entity2)) {
+//            std::cout << "COLLISION!" << std::endl;
+//        }
+
         window.clear(sf::Color(72, 152, 72));
+
+//        window.draw(entity);
+//        window.draw(entity2);
+
+        entityManager.Render(&window);
+
         window.display();
 
         timeElapsed = timer.getElapsedTime();

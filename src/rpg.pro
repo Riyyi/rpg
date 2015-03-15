@@ -18,8 +18,10 @@ DEPENDPATH += $$PWD/include
 TEMPLATE = app
 
 SOURCES += main.cpp \
-    maploader.cpp
+    inputmanager.cpp
 
 HEADERS += \
-    maploader.h
+    inputmanager.h \
+    entity.h \
+    entitymanager.h
 
