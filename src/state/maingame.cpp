@@ -15,12 +15,31 @@ void MainGame::Initialize(sf::RenderWindow* window) {
 }
 
 void MainGame::Update(sf::RenderWindow* window) {
+    this->entityManager->Get("test0")->velocity.x = 0;
+    this->entityManager->Get("test0")->velocity.y = 0;
+
     if(inputManager.IsPressed(InputManager::Left)) {
         std::cout << "LEFT" << std::endl;
+
+        this->entityManager->Get("test0")->velocity.x = -1;
+    }
+
+    if(inputManager.IsPressed(InputManager::Right)) {
+        std::cout << "RIGHT" << std::endl;
+
+        this->entityManager->Get("test0")->velocity.x = 1;
     }
 
     if(inputManager.IsPressed(InputManager::Down)) {
         std::cout << "DOWN" << std::endl;
+
+        this->entityManager->Get("test0")->velocity.y = 1;
+    }
+
+    if(inputManager.IsPressed(InputManager::Up)) {
+        std::cout << "UP" << std::endl;
+
+        this->entityManager->Get("test0")->velocity.y = -1;
     }
 
     this->entityManager->Update();
