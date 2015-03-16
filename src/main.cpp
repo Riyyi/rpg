@@ -1,14 +1,10 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 
-#include "inputmanager.h"
-#include "entitymanager.h"
+#include "state/maingame.h"
 
 InputManager inputManager;
-
-void UpdateCollisions(Entity* entityA, Entity* entityB) {
-    std::cout << "Collisions!" << std::endl;
-}
+GameStateParent gameState;
 
 int main()
 {
@@ -22,20 +18,12 @@ int main()
     sf::RenderWindow window(sf::VideoMode(1280, 720), gameName, windowStyle, settings);
     window.setVerticalSyncEnabled(true);
 
+    gameState.SetWindow(&window);
+    gameState.SetState(new MainGame());
+
     sf::Clock fpsTimer;
     sf::Clock timer;
     sf::Time timeElapsed;
-
-    EntityManager entityManager;
-    entityManager.AddEntity("test", new Entity("data\\gfx\\test.png"));
-    entityManager.AddEntity("test", new Entity("data\\gfx\\test.png"));
-    entityManager.SetCollisionMethod(UpdateCollisions);
-
-//    Entity entity;
-//    entity.Load("data\\gfx\\test.png");
-
-//    Entity entity2;
-//    entity2.Load("data\\gfx\\test.png");
 
     // Run the program as long as the window is open
     while (window.isOpen())
@@ -65,26 +53,12 @@ int main()
                     }
                 }
             }
-
-            if(inputManager.IsPressed(InputManager::Left)) {
-                std::cout << "LEFT" << std::endl;
-            }
-
-            if(inputManager.IsPressed(InputManager::Down)) {
-                std::cout << "DOWN" << std::endl;
-            }
         }
-
-//        if(entity.Collision(&entity2)) {
-//            std::cout << "COLLISION!" << std::endl;
-//        }
 
         window.clear(sf::Color(72, 152, 72));
 
-//        window.draw(entity);
-//        window.draw(entity2);
-
-        entityManager.Render(&window);
+        gameState.Update();
+        gameState.Render();
 
         window.display();
 

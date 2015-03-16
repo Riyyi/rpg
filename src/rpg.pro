@@ -18,10 +18,12 @@ DEPENDPATH += $$PWD/include
 TEMPLATE = app
 
 SOURCES += main.cpp \
-    inputmanager.cpp
+    inputmanager.cpp \
+    state/maingame.cpp
 
 HEADERS += \
     inputmanager.h \
     entity.h \
-    entitymanager.h
-
+    entitymanager.h \
+    gamestate.h \
+    state/maingame.h
