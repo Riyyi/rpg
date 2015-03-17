@@ -19,10 +19,10 @@ public:
     }
 };
 
-class GameStateParent
+class GameStateManager
 {
 public:
-    GameStateParent() {
+    GameStateManager() {
         this->state = NULL;
     }
 
@@ -53,7 +53,7 @@ public:
         }
     }
 
-    ~GameStateParent() {
+    ~GameStateManager() {
         if(this->state != NULL) {
             this->state->Destroy(this->window);
         }
@@ -65,7 +65,7 @@ private:
     GameState* state;
 };
 
-extern GameStateParent gameState;
+extern GameStateManager gameState;
 
 #endif // GAMESTATE
 

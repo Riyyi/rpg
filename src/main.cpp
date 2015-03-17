@@ -4,7 +4,7 @@
 #include "state/maingame.h"
 
 InputManager inputManager;
-GameStateParent gameState;
+GameStateManager gameState;
 
 int main()
 {
@@ -16,7 +16,8 @@ int main()
     settings.antialiasingLevel = 16;
 
     sf::RenderWindow window(sf::VideoMode(1280, 720), gameName, windowStyle, settings);
-    window.setVerticalSyncEnabled(true);
+    //window.setVerticalSyncEnabled(true);
+    window.setFramerateLimit(60);
 
     gameState.SetWindow(&window);
     gameState.SetState(new MainGame());

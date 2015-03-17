@@ -5,13 +5,19 @@ void UpdateCollisions(Entity* entityA, Entity* entityB) {
 }
 
 void MainGame::Initialize(sf::RenderWindow* window) {
-    entityManager = new EntityManager();
-    entityManager->SetCollisionMethod(UpdateCollisions);
+    this->entityManager = new EntityManager();
+    this->entityManager->SetCollisionMethod(UpdateCollisions);
 
+    // Add entities
     this->entityManager->AddEntity("test", new Entity("data\\gfx\\test.png"));
     this->entityManager->AddEntity("test", new Entity("data\\gfx\\test.png"));
     this->entityManager->Get("test0")->velocity.x = 0.5;
     this->entityManager->Get("test")->setPosition(sf::Vector2f(50, 50));
+
+    // Load map
+    this->map = new Map();
+    MapLoad mapLoad;
+    mapLoad.Load(this->map, "data\\map\\level1.json");
 }
 
 void MainGame::Update(sf::RenderWindow* window) {

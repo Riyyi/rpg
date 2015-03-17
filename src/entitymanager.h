@@ -46,7 +46,7 @@ public:
                 if (this->collisionsEvent != NULL) {
                     for (auto& iterator2 : this->entities) {
                         if (iterator != iterator2) {
-                            if (iterator.second->Collision(iterator2.second)) {
+                            if(iterator.second->Collision(iterator2.second)) {
                                 this->collisionsEvent(iterator.second, iterator2.second);
                             }
                         }

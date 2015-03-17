@@ -19,11 +19,15 @@ TEMPLATE = app
 
 SOURCES += main.cpp \
     inputmanager.cpp \
-    state/maingame.cpp
+    state/maingame.cpp \
+    mapload.cpp \
+    map.cpp
 
 HEADERS += \
     inputmanager.h \
     entity.h \
     entitymanager.h \
     gamestate.h \
-    state/maingame.h
+    state/maingame.h \
+    mapload.h \
+    map.h
