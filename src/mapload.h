@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <fstream>
-
+#include <algorithm>
 #include <rapidjson/document.h>
 
 #include "map.h"

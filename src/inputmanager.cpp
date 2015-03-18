@@ -18,6 +18,7 @@ sf::Keyboard::Key InputManager::KeyboardConfiguration(Input key) {
     if(key == Right) return sf::Keyboard::E;
     if(key == Up) return sf::Keyboard::Comma;
     if(key == Down) return sf::Keyboard::O;
+    if(key == LoadMap) return sf::Keyboard::L;
 
     return sf::Keyboard::Unknown;
 }

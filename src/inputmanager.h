@@ -16,6 +16,7 @@ public:
         Right,
         Up,
         Down,
+        LoadMap,
 
         KeyCount      ///< Keep last -- the total number of inputs
     };

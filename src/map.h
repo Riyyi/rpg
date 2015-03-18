@@ -3,6 +3,24 @@
 
 #include <iostream>
 #include <vector>
+#include <SFML/Graphics.hpp>
+
+class Layer
+{
+public:
+    //Layer();
+    //~Layer();
+
+    std::vector<std::vector<int>> data;
+    int height;
+//    name
+//    opacity
+//    type
+    bool visible;
+    int width;
+    int x;
+    int y;
+};
 
 class TileSet
 {
@@ -26,24 +44,7 @@ public:
 //            "transparentcolor":"#ffffff"
     // @Todo save all tile textures with pointers
     // map->tileSet.tile[1];
-    std::vector<int> tile;
-};
-
-class Layer
-{
-public:
-    //Layer();
-    //~Layer();
-
-    std::vector<std::vector<int>> data;
-    int height;
-//    name
-//    opacity
-//    type
-    bool visible;
-    int width;
-    int x;
-    int y;
+    std::vector<sf::Texture*> tile;
 };
 
 class Map
@@ -51,6 +52,7 @@ class Map
 public:
     Map();
     ~Map();
+    void Render(sf::RenderWindow* window);
 
     // Global
     int height;

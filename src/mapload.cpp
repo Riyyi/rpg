@@ -44,22 +44,42 @@ void MapLoad::Parser(std::string* content, Map* map) {
     tileSet->tileHeight = document["tilesets"][0]["tileheight"].GetInt();
     tileSet->tileWidth = document["tilesets"][0]["tilewidth"].GetInt();
 
-    int height = document["layers"][0]["height"].GetInt();
-    int width = document["layers"][0]["width"].GetInt();
+    int height = tileSet->imageHeight / tileSet->tileHeight;
+    int width = tileSet->imageWidth / tileSet->tileWidth;
+
+    // Add NULL texture to fill position '0'
+    sf::Texture* texture = new sf::Texture();
+    tileSet->tile.push_back(texture);
+
+    // Load map tilesheet
+    std::string tileSheetLocation = tileSet->image;
+    tileSheetLocation.replace(0, 2, "data");
+    sf::Image tileSheet;
+    tileSheet.loadFromFile(tileSheetLocation);
+    for(int y = 0; y < height; y++) {
+        for(int x = 0; x < width; x++) {
+            sf::Texture* texture = new sf::Texture();
+            texture->loadFromImage(tileSheet, sf::IntRect(x * tileSet->tileWidth,  y * tileSet->tileHeight, tileSet->tileWidth, tileSet->tileHeight));
+            tileSet->tile.push_back(texture);
+        }
+    }
 
     // LAYER 1
+    height = document["layers"][0]["height"].GetInt();
+    width = document["layers"][0]["width"].GetInt();
+
     Layer* layer = new Layer();
 
     const rapidjson::Value& mapArray = document["layers"][0]["data"];
     assert(mapArray.IsArray());
 
-    int y = 0;
-    for (int i = 0; i < height; i++) {
+    int itr = 0;
+    for (int y = 0; y < height; y++) {
         std::vector<int> row;
 
-        for (int j = 0; j < width; j++) {
-            row.push_back(mapArray[y].GetInt());
-            y++;
+        for (int x = 0; x < width; x++) {
+            row.push_back(mapArray[itr].GetInt());
+            itr++;
         }
 
         layer->data.push_back(row);
