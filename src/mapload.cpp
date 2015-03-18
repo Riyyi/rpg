@@ -56,6 +56,7 @@ void MapLoad::Parser(std::string* content, Map* map) {
     tileSheetLocation.replace(0, 2, "data");
     sf::Image tileSheet;
     tileSheet.loadFromFile(tileSheetLocation);
+    tileSheet.createMaskFromColor(sf::Color::White);
     for(int y = 0; y < height; y++) {
         for(int x = 0; x < width; x++) {
             sf::Texture* texture = new sf::Texture();

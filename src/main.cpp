@@ -16,6 +16,8 @@ int main()
     settings.antialiasingLevel = 16;
 
     sf::RenderWindow window(sf::VideoMode(1280, 720), gameName, windowStyle, settings);
+    window.clear(sf::Color(0, 0, 0));
+    window.display();
     //window.setVerticalSyncEnabled(true);
     window.setFramerateLimit(60);
 

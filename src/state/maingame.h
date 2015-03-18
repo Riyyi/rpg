@@ -7,6 +7,7 @@
 #include "entitymanager.h"
 #include "inputmanager.h"
 #include "mapload.h"
+#include "camera.h"
 
 class MainGame : public GameState
 {
@@ -19,6 +20,7 @@ public:
 private:
     EntityManager* entityManager;
     Map* map;
+    Camera* camera;
 };
 
 #endif // MAINGAME_H

@@ -21,7 +21,8 @@ SOURCES += main.cpp \
     inputmanager.cpp \
     state/maingame.cpp \
     mapload.cpp \
-    map.cpp
+    map.cpp \
+    camera.cpp
 
 HEADERS += \
     inputmanager.h \
@@ -30,4 +31,5 @@ HEADERS += \
     gamestate.h \
     state/maingame.h \
     mapload.h \
-    map.h
+    map.h \
+    camera.h

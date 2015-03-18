@@ -18,6 +18,9 @@ void MainGame::Initialize(sf::RenderWindow* window) {
     this->map = new Map();
     MapLoad mapLoad;
     mapLoad.Load(this->map, "data/map/level1.json");
+
+    this->camera = new Camera();
+    this->camera->SetNewView(window);
 }
 
 void MainGame::Update(sf::RenderWindow* window) {
@@ -27,26 +30,48 @@ void MainGame::Update(sf::RenderWindow* window) {
     if(inputManager.IsPressed(InputManager::Left)) {
         std::cout << "LEFT" << std::endl;
 
-        this->entityManager->Get("test0")->velocity.x = -1;
+        this->entityManager->Get("test0")->velocity.x = -1.5;
+        this->camera->MoveCamera(window, sf::Vector2f(-1.5, 0));
     }
 
     if(inputManager.IsPressed(InputManager::Right)) {
         std::cout << "RIGHT" << std::endl;
 
-        this->entityManager->Get("test0")->velocity.x = 1;
-    }
-
-    if(inputManager.IsPressed(InputManager::Down)) {
-        std::cout << "DOWN" << std::endl;
-
-        this->entityManager->Get("test0")->velocity.y = 1;
+        this->entityManager->Get("test0")->velocity.x = 1.5;
+        this->camera->MoveCamera(window, sf::Vector2f(1.5, 0));
     }
 
     if(inputManager.IsPressed(InputManager::Up)) {
         std::cout << "UP" << std::endl;
 
-        this->entityManager->Get("test0")->velocity.y = -1;
+        this->entityManager->Get("test0")->velocity.y = -1.5;
+        this->camera->MoveCamera(window, sf::Vector2f(0, -1.5));
     }
+
+    if(inputManager.IsPressed(InputManager::Down)) {
+        std::cout << "DOWN" << std::endl;
+
+        this->entityManager->Get("test0")->velocity.y = 1.5;
+        this->camera->MoveCamera(window, sf::Vector2f(0, 1.5));
+    }
+
+    if(inputManager.IsPressed(InputManager::Up)
+    && inputManager.IsPressed(InputManager::Down)) {
+        this->entityManager->Get("test0")->velocity.x = 0;
+        this->entityManager->Get("test0")->velocity.y = 0;
+    }
+
+    if(inputManager.IsPressed(InputManager::Left)
+    && inputManager.IsPressed(InputManager::Right)) {
+        this->entityManager->Get("test0")->velocity.x = 0;
+        this->entityManager->Get("test0")->velocity.y = 0;
+    }
+
+//    if(inputManager.IsPressed(InputManager::Up)
+//    && inputManager.IsPressed(InputManager::Right)) {
+//        this->entityManager->Get("test0")->velocity.y = -1.125;
+//        this->entityManager->Get("test0")->velocity.x = 1.125;
+//    }
 
     this->entityManager->Update();
 
