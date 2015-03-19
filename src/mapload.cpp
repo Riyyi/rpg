@@ -37,22 +37,22 @@ void MapLoad::Parser(std::string* content, Map* map) {
 
     // Process map
     // TILESET
-    TileSet* tileSet = new TileSet();
-    tileSet->image = document["tilesets"][0]["image"].GetString();
-    tileSet->imageHeight = document["tilesets"][0]["imageheight"].GetInt();
-    tileSet->imageWidth = document["tilesets"][0]["imagewidth"].GetInt();
-    tileSet->tileHeight = document["tilesets"][0]["tileheight"].GetInt();
-    tileSet->tileWidth = document["tilesets"][0]["tilewidth"].GetInt();
+    map->tileSet->Clear();
+    map->tileSet->image = document["tilesets"][0]["image"].GetString();
+    map->tileSet->imageHeight = document["tilesets"][0]["imageheight"].GetInt();
+    map->tileSet->imageWidth = document["tilesets"][0]["imagewidth"].GetInt();
+    map->tileSet->tileHeight = document["tilesets"][0]["tileheight"].GetInt();
+    map->tileSet->tileWidth = document["tilesets"][0]["tilewidth"].GetInt();
 
-    int height = tileSet->imageHeight / tileSet->tileHeight;
-    int width = tileSet->imageWidth / tileSet->tileWidth;
+    int height = map->tileSet->imageHeight / map->tileSet->tileHeight;
+    int width = map->tileSet->imageWidth / map->tileSet->tileWidth;
 
     // Add NULL texture to fill position '0'
     sf::Texture* texture = new sf::Texture();
-    tileSet->tile.push_back(texture);
+    map->tileSet->tile.push_back(texture);
 
     // Load map tilesheet
-    std::string tileSheetLocation = tileSet->image;
+    std::string tileSheetLocation = map->tileSet->image;
     tileSheetLocation.replace(0, 2, "data");
     sf::Image tileSheet;
     tileSheet.loadFromFile(tileSheetLocation);
@@ -60,16 +60,18 @@ void MapLoad::Parser(std::string* content, Map* map) {
     for(int y = 0; y < height; y++) {
         for(int x = 0; x < width; x++) {
             sf::Texture* texture = new sf::Texture();
-            texture->loadFromImage(tileSheet, sf::IntRect(x * tileSet->tileWidth,  y * tileSet->tileHeight, tileSet->tileWidth, tileSet->tileHeight));
-            tileSet->tile.push_back(texture);
+            texture->loadFromImage(tileSheet, sf::IntRect(x * map->tileSet->tileWidth,
+                                                          y * map->tileSet->tileHeight,
+                                                          map->tileSet->tileWidth,
+                                                          map->tileSet->tileHeight));
+            map->tileSet->tile.push_back(texture);
         }
     }
 
     // LAYER 1
+    map->layer1->data.clear();
     height = document["layers"][0]["height"].GetInt();
     width = document["layers"][0]["width"].GetInt();
-
-    Layer* layer = new Layer();
 
     const rapidjson::Value& mapArray = document["layers"][0]["data"];
     assert(mapArray.IsArray());
@@ -83,20 +85,20 @@ void MapLoad::Parser(std::string* content, Map* map) {
             itr++;
         }
 
-        layer->data.push_back(row);
+        map->layer1->data.push_back(row);
     }
 
-    layer->height = height;
-    layer->visible = document["layers"][0]["visible"].GetBool();
-    layer->width = width;
-    layer->x = document["layers"][0]["x"].GetInt();
-    layer->y = document["layers"][0]["y"].GetInt();
+    map->layer1->height = height;
+    map->layer1->visible = document["layers"][0]["visible"].GetBool();
+    map->layer1->width = width;
+    map->layer1->x = document["layers"][0]["x"].GetInt();
+    map->layer1->y = document["layers"][0]["y"].GetInt();
 
     // MAP
     map->height = document["layers"][0]["height"].GetInt();
-    map->layer1 = layer;
+    // Layer
     map->tileheight = document["tileheight"].GetInt();
-    map->tileSet = tileSet;
+    // TileSet
     map->tilewidth = document["tilewidth"].GetInt();
     map->width = document["layers"][0]["width"].GetInt();
 

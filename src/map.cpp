@@ -1,18 +1,20 @@
 #include "map.h"
 
-//TileSet::~TileSet() {
-//    // @Todo remove all tiles from std::vector<sf::Texture*> tile;
-//}
+void TileSet::Clear() {
+    while (this->tile.size() > 0) {
+        delete this->tile[this->tile.size() - 1];
+        this->tile.pop_back();
+    }
+}
+
+TileSet::~TileSet() {
+    this->Clear();
+}
 
 Map::Map()
 {
-
-}
-
-Map::~Map()
-{
-    delete this->tileSet;
-    delete this->layer1;
+    this->tileSet = new TileSet();
+    this->layer1 = new Layer();
 }
 
 void Map::Render(sf::RenderWindow* window) {
@@ -32,6 +34,12 @@ void Map::Render(sf::RenderWindow* window) {
     }
 }
 
+Map::~Map()
+{
+    delete this->tileSet;
+    delete this->layer1;
+}
+
 //void drawMap(sf::RenderWindow* window)
 //{
 //	sf::Sprite tile;
@@ -42,13 +50,13 @@ void Map::Render(sf::RenderWindow* window) {
 //	int maxHeight = nearbyint((view.getCenter().y + view.getSize().y / 2) / map->tileSet->tileHeight) + 1;
 //	int minHeight = nearbyint((view.getCenter().y - view.getSize().y / 2) / map->tileSet->tileHeight) - 1;
 
-//	for (int y = minHeight; y < maxHeight; y++)
+//	for (int y = minHeight; y < maxHeight && y < map->height; y++)
 //	{
 //		if (y < 0)
 //		{
 //			y = 0;
 //		}
-//		for (int x = minWidth; x < maxWidth; x++)
+//		for (int x = minWidth; x < maxWidth && x < map->width; x++)
 //		{
 //			if (x < 0)
 //			{

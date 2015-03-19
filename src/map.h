@@ -26,7 +26,8 @@ class TileSet
 {
 public:
     //TileSet();
-    //~TileSet();
+    void Clear();
+    ~TileSet();
 
 //            "firstgid":1,
     std::string image;
@@ -51,8 +52,9 @@ class Map
 {
 public:
     Map();
-    ~Map();
     void Render(sf::RenderWindow* window);
+    ~Map();
+
 
     // Global
     int height;
