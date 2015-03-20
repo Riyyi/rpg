@@ -20,6 +20,13 @@ void Player::Update(sf::RenderWindow* window, InputManager inputManager) {
     this->velocity.y = inputManager.IsPressed(InputManager::Down) * this->speed -
                        inputManager.IsPressed(InputManager::Up) * this->speed;
 
+    // Set correct speed on diagonal movement
+    if((this->velocity.x == this->speed || this->velocity.x == -this->speed)
+    && (this->velocity.y == this->speed || this->velocity.y == -this->speed)) {
+        this->velocity.x *= sqrt(this->speed * 2 + this->speed * 2) / (this->speed * 2);
+        this->velocity.y *= sqrt(this->speed * 2 + this->speed * 2) / (this->speed * 2);
+    }
+
     // Update camera position
     //|------------|--------------|------------|
     //|     1      |      2       |     1      |
