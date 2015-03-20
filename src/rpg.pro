@@ -22,7 +22,10 @@ SOURCES += main.cpp \
     state/maingame.cpp \
     mapload.cpp \
     map.cpp \
-    camera.cpp
+    camera.cpp \
+    player.cpp \
+    entity.cpp \
+    entitymanager.cpp
 
 HEADERS += \
     inputmanager.h \
@@ -32,4 +35,5 @@ HEADERS += \
     state/maingame.h \
     mapload.h \
     map.h \
-    camera.h
+    camera.h \
+    player.h

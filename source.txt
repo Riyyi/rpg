@@ -1,9 +1,0 @@
-Book
-~~~~
-
-Michael Dawson - Beginning C++ Through Game Programming, Third Edition - 2010
-
-Video
-~~~~
-
-https://www.youtube.com/user/geraldmcalister/videos

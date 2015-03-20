@@ -13,66 +13,24 @@ void MainGame::Initialize(sf::RenderWindow* window) {
     this->entityManager->AddEntity("test", new Entity("data/gfx/test.png"));
     this->entityManager->Get("test0")->velocity.x = 0.5;
     this->entityManager->Get("test")->setPosition(sf::Vector2f(50, 50));
+    this->entityManager->Get("test0")->setPosition(sf::Vector2f(50, 300));
 
-    // Load map
+    // Load Map
     this->map = new Map();
     MapLoad mapLoad;
     mapLoad.Load(this->map, "data/map/level1.json");
 
+    // Load Camera
     this->camera = new Camera();
     this->camera->SetNewView(window);
+
+    // Load Player
+    this->player = new Player(this->entityManager, this->camera, 100, 100);
+    this->entityManager->AddEntity("Player", this->player);
 }
 
 void MainGame::Update(sf::RenderWindow* window) {
-    this->entityManager->Get("test0")->velocity.x = 0;
-    this->entityManager->Get("test0")->velocity.y = 0;
-
-    if(inputManager.IsPressed(InputManager::Left)) {
-        std::cout << "LEFT" << std::endl;
-
-        this->entityManager->Get("test0")->velocity.x = -1.5;
-        this->camera->MoveCamera(window, sf::Vector2f(-1.5, 0));
-    }
-
-    if(inputManager.IsPressed(InputManager::Right)) {
-        std::cout << "RIGHT" << std::endl;
-
-        this->entityManager->Get("test0")->velocity.x = 1.5;
-        this->camera->MoveCamera(window, sf::Vector2f(1.5, 0));
-    }
-
-    if(inputManager.IsPressed(InputManager::Up)) {
-        std::cout << "UP" << std::endl;
-
-        this->entityManager->Get("test0")->velocity.y = -1.5;
-        this->camera->MoveCamera(window, sf::Vector2f(0, -1.5));
-    }
-
-    if(inputManager.IsPressed(InputManager::Down)) {
-        std::cout << "DOWN" << std::endl;
-
-        this->entityManager->Get("test0")->velocity.y = 1.5;
-        this->camera->MoveCamera(window, sf::Vector2f(0, 1.5));
-    }
-
-    if(inputManager.IsPressed(InputManager::Up)
-    && inputManager.IsPressed(InputManager::Down)) {
-        this->entityManager->Get("test0")->velocity.x = 0;
-        this->entityManager->Get("test0")->velocity.y = 0;
-    }
-
-    if(inputManager.IsPressed(InputManager::Left)
-    && inputManager.IsPressed(InputManager::Right)) {
-        this->entityManager->Get("test0")->velocity.x = 0;
-        this->entityManager->Get("test0")->velocity.y = 0;
-    }
-
-//    if(inputManager.IsPressed(InputManager::Up)
-//    && inputManager.IsPressed(InputManager::Right)) {
-//        this->entityManager->Get("test0")->velocity.y = -1.125;
-//        this->entityManager->Get("test0")->velocity.x = 1.125;
-//    }
-
+    this->player->Update(window, inputManager);
     this->entityManager->Update();
 
     if(inputManager.IsPressed(InputManager::LoadMap)) {
@@ -89,4 +47,6 @@ void MainGame::Render(sf::RenderWindow* window) {
 
 void MainGame::Destroy(sf::RenderWindow* window) {
     delete this->entityManager;
+    delete this->map;
+    delete this->camera;
 }

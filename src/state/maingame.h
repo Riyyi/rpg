@@ -3,11 +3,12 @@
 
 #include <iostream>
 
-#include "gamestate.h"
+#include "camera.h"
 #include "entitymanager.h"
+#include "gamestate.h"
 #include "inputmanager.h"
 #include "mapload.h"
-#include "camera.h"
+#include "player.h"
 
 class MainGame : public GameState
 {
@@ -21,6 +22,7 @@ private:
     EntityManager* entityManager;
     Map* map;
     Camera* camera;
+    Player* player;
 };
 
 #endif // MAINGAME_H
