@@ -7,7 +7,7 @@ Player::Player(EntityManager* entityManager, Map *map, Camera *camera, float x, 
 
     this->Load("data/gfx/player.png");
     this->setPosition(x, y);
-    this->speed = 1.5f;
+    this->speed = 2.5f;
 }
 
 void Player::Update(sf::RenderWindow* window, InputManager inputManager) {
