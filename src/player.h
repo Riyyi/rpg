@@ -7,11 +7,12 @@
 #include "camera.h"
 #include "entitymanager.h"
 #include "inputmanager.h"
+#include "map.h"
 
 class Player : public Entity
 {
 public:
-    Player(EntityManager* entityManager, Camera* camera, float x = 0, float y = 0);
+    Player(EntityManager* entityManager, Map* map, Camera* camera, float x = 0, float y = 0);
     void Update(sf::RenderWindow *window, InputManager inputManager);
     float SetSpeed();
     int GetHealth();
@@ -20,6 +21,7 @@ public:
 
 private:
     EntityManager* entityManager;
+    Map* map;
     Camera* camera;
     int health;
     int maxHealth;

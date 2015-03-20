@@ -25,7 +25,7 @@ void MainGame::Initialize(sf::RenderWindow* window) {
     this->camera->SetNewView(window);
 
     // Load Player
-    this->player = new Player(this->entityManager, this->camera, 100, 100);
+    this->player = new Player(this->entityManager, this->map, this->camera, 100, 100);
     this->entityManager->AddEntity("Player", this->player);
 }
 
