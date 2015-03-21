@@ -21,8 +21,7 @@ void MainGame::Initialize(sf::RenderWindow* window) {
     mapLoad.Load(this->map, "data/map/level1.json");
 
     // Load Camera
-    this->camera = new Camera();
-    this->camera->SetNewView(window);
+    this->camera = new Camera(window);
 
     // Load Player
     this->player = new Player(this->entityManager, this->map, this->camera, 100, 100);
@@ -30,8 +29,13 @@ void MainGame::Initialize(sf::RenderWindow* window) {
 }
 
 void MainGame::Update(sf::RenderWindow* window) {
-    this->player->Update(window, inputManager);
+    this->time = this->clock.getElapsedTime();
+    int timeElapsed = this->time.asMicroseconds();
+    this->clock.restart();
+
+    this->player->Update(window, inputManager, timeElapsed);
     this->entityManager->Update();
+    this->camera->Update(window, this->map, sf::Vector2f(this->player->getPosition().x, this->player->getPosition().y));
 
     if(inputManager.IsPressed(InputManager::LoadMap)) {
         std::cout << "Loading Map..." << std::endl;

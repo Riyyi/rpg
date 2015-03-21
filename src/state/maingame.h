@@ -19,6 +19,9 @@ public:
     void Destroy(sf::RenderWindow* window);
 
 private:
+    sf::Clock clock;
+    sf::Time time;
+
     EntityManager* entityManager;
     Map* map;
     Camera* camera;

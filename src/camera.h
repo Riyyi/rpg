@@ -3,14 +3,16 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "map.h"
+
 class Camera
 {
 public:
-    Camera();
-    ~Camera();
-    void SetNewView(sf::RenderWindow *window);
+    Camera(sf::RenderWindow *window);
     void MoveCamera(sf::RenderWindow *window, sf::Vector2f move);
     void SetCenter(sf::RenderWindow *window, sf::Vector2f position);
+    void Update(sf::RenderWindow *window, Map *map, sf::Vector2f position);
+    ~Camera();
 
 private:
     //sf::Vector2f position;
