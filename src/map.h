@@ -15,6 +15,7 @@ public:
     int height;
 //    name
 //    opacity
+//    properties
 //    type
     bool visible;
     int width;
@@ -58,7 +59,9 @@ public:
 
     // Global
     int height;
-    Layer* layer1;
+    Layer* ground1;
+    Layer* above1;
+    Layer* collision;
 //    "nextobjectid":1,
 //    "orientation":"orthogonal",
 //    "properties":

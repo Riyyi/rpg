@@ -17,8 +17,7 @@ void MainGame::Initialize(sf::RenderWindow* window) {
 
     // Load Map
     this->map = new Map();
-    MapLoad mapLoad;
-    mapLoad.Load(this->map, "data/map/level1.json");
+    MapLoad(this->map, "data/map/level1.json");
 
     // Load Camera
     this->camera = new Camera(window);
@@ -39,8 +38,7 @@ void MainGame::Update(sf::RenderWindow* window) {
 
     if(inputManager.IsPressed(InputManager::LoadMap)) {
         std::cout << "Loading Map..." << std::endl;
-        MapLoad mapLoad;
-        mapLoad.Load(this->map, "data/map/level1.json");
+        MapLoad(this->map, "data/map/level1.json", 1);
     }
 }
 

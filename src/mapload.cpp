@@ -1,16 +1,25 @@
 #include "mapload.h"
 
-MapLoad::MapLoad()
-{
+MapLoad::MapLoad(Map *map, std::string mapName, int update) {
+    std::string content;
+    rapidjson::Document document;
 
+    this->GetFile(&content, mapName);
+    this->Parser(&content, &document);
+    this->LoadLayer(document, map);
+    if(!update) {
+        this->LoadTileSet(document, map);
+    }
+    this->LoadMap(document, map);
+
+//    for (int i = 0; i < 100; i++) {
+//        for (int j = 0; j < 100; j++) {
+//            std::cout << map->collision->data[i][j] << std::endl;
+//        }
+//    }
 }
 
-MapLoad::~MapLoad()
-{
-
-}
-
-void MapLoad::GetFile(std::string* content, std::string mapName) {
+void MapLoad::GetFile(std::string *content, std::string mapName) {
     // Get the content of the map file and append it to content
     std::ifstream openFile(mapName);
     if (openFile.is_open())
@@ -30,13 +39,56 @@ void MapLoad::GetFile(std::string* content, std::string mapName) {
     }
 }
 
-void MapLoad::Parser(std::string* content, Map* map) {
+void MapLoad::Parser(std::string *content, rapidjson::Document *document) {
     // 1. Parse a JSON string into DOM.
-    rapidjson::Document document;
-    document.Parse(content->c_str());
+    document->Parse(content->c_str());
+}
 
-    // Process map
-    // TILESET
+void MapLoad::LoadLayer(const rapidjson::Document& document, Map *map) {
+    int loopCount = document["layers"].Size();
+    Layer* current;
+    for(unsigned int i = 0; i < loopCount; i++) {
+        current = NULL;
+        if(document["layers"][i]["properties"]["name"] == "Ground1") {
+            current = map->ground1;
+        }
+        else if(document["layers"][i]["properties"]["name"] == "Above1") {
+            current = map->above1;
+        }
+        if(document["layers"][i]["properties"]["name"] == "Collision") {
+            current = map->collision;
+        }
+
+        if(current != NULL) {
+            current->data.clear();
+            int height = document["layers"][i]["height"].GetInt();
+            int width = document["layers"][i]["width"].GetInt();
+
+            const rapidjson::Value& mapArray = document["layers"][i]["data"];
+            assert(mapArray.IsArray());
+
+            int itr = 0;
+            for (int y = 0; y < height; y++) {
+                std::vector<int> row;
+
+                for (int x = 0; x < width; x++) {
+                    row.push_back(mapArray[itr].GetInt());
+                    itr++;
+                }
+
+                current->data.push_back(row);
+            }
+
+            current->height = height;
+            current->visible = document["layers"][i]["visible"].GetBool();
+            current->width = width;
+            current->x = document["layers"][i]["x"].GetInt();
+            current->y = document["layers"][i]["y"].GetInt();
+        }
+    }
+}
+
+void MapLoad::LoadTileSet(const rapidjson::Document& document, Map *map) {
     map->tileSet->Clear();
     map->tileSet->image = document["tilesets"][0]["image"].GetString();
     map->tileSet->imageHeight = document["tilesets"][0]["imageheight"].GetInt();
@@ -67,33 +119,9 @@ void MapLoad::Parser(std::string* content, Map* map) {
             map->tileSet->tile.push_back(texture);
         }
     }
+}
 
-    // LAYER 1
-    map->layer1->data.clear();
-    height = document["layers"][0]["height"].GetInt();
-    width = document["layers"][0]["width"].GetInt();
-
-    const rapidjson::Value& mapArray = document["layers"][0]["data"];
-    assert(mapArray.IsArray());
-
-    int itr = 0;
-    for (int y = 0; y < height; y++) {
-        std::vector<int> row;
-
-        for (int x = 0; x < width; x++) {
-            row.push_back(mapArray[itr].GetInt());
-            itr++;
-        }
-
-        map->layer1->data.push_back(row);
-    }
-
-    map->layer1->height = height;
-    map->layer1->visible = document["layers"][0]["visible"].GetBool();
-    map->layer1->width = width;
-    map->layer1->x = document["layers"][0]["x"].GetInt();
-    map->layer1->y = document["layers"][0]["y"].GetInt();
-
+void MapLoad::LoadMap(const rapidjson::Document& document, Map *map) {
     // MAP
     map->height = document["layers"][0]["height"].GetInt();
     // Layer
@@ -101,16 +129,9 @@ void MapLoad::Parser(std::string* content, Map* map) {
     // TileSet
     map->tilewidth = document["tilewidth"].GetInt();
     map->width = document["layers"][0]["width"].GetInt();
-
-//    for (int i = 0; i < map->data1.size(); i++) {
-//        for (int j = 0; j < width; j++) {
-//            std::cout << map->data1[i][j] << std::endl;
-//        }
-//    }
 }
 
-void MapLoad::Load(Map* map, std::string mapName) {
-    std::string content;
-    GetFile(&content, mapName);
-    Parser(&content, map);
+MapLoad::~MapLoad()
+{
+
 }

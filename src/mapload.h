@@ -11,12 +11,13 @@
 class MapLoad
 {
 public:
-    MapLoad();
+    MapLoad(Map *map, std::string mapName, int update = 0);
+    void GetFile(std::string *content, std::string mapName);
+    void Parser(std::string *content, rapidjson::Document *document);
+    void LoadLayer(const rapidjson::Document &document, Map *map);
+    void LoadTileSet(const rapidjson::Document& document, Map *map);
+    void LoadMap(const rapidjson::Document& document, Map *map);
     ~MapLoad();
-
-    void GetFile(std::string* content, std::string mapName);
-    void Parser(std::string* content, Map* map);
-    void Load(Map* map, std::string mapName);
 };
 
 #endif // MAPLOAD_H
