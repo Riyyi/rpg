@@ -53,7 +53,8 @@ class Map
 {
 public:
     Map();
-    void Render(sf::RenderWindow* window);
+    void RenderGround(sf::RenderWindow* window);
+    void RenderAbove(sf::RenderWindow* window);
     ~Map();
 
 
@@ -74,6 +75,9 @@ public:
     int tilewidth;
 //    "version":1,
     int width;
+
+private:
+    void Render(sf::RenderWindow* window, Layer *layer);
 };
 
 //sf::Sprite* sprite;

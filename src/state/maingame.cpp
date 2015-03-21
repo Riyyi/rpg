@@ -43,8 +43,9 @@ void MainGame::Update(sf::RenderWindow* window) {
 }
 
 void MainGame::Render(sf::RenderWindow* window) {
-    this->map->Render(window);
+    this->map->RenderGround(window);
     this->entityManager->Render(window);
+    this->map->RenderAbove(window);
 }
 
 void MainGame::Destroy(sf::RenderWindow* window) {

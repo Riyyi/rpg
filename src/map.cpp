@@ -18,7 +18,17 @@ Map::Map() {
     this->tileSet = new TileSet();
 }
 
-void Map::Render(sf::RenderWindow* window) {
+void Map::RenderGround(sf::RenderWindow* window) {
+    Layer* layer = this->ground1;
+    this->Render(window, layer);
+}
+
+void Map::RenderAbove(sf::RenderWindow* window) {
+    Layer* layer = this->above1;
+    this->Render(window, layer);
+}
+
+void Map::Render(sf::RenderWindow* window, Layer *layer) {
     // Get render section
     sf::Vector2f renderWidth = sf::Vector2f((window->getView().getCenter().x - window->getSize().x / 2) / this->tilewidth,
                                        (window->getView().getCenter().x + window->getSize().x / 2) / this->tilewidth);
@@ -30,7 +40,7 @@ void Map::Render(sf::RenderWindow* window) {
     sf::Sprite tile;
     for (int y = renderHeight.x; y < renderHeight.y; y++) {
         for (int x = renderWidth.x; x < renderWidth.y; x++) {
-            index = this->ground1->data[y][x];
+            index = layer->data[y][x];
             if(index != 0) {
                 tile.setTexture(*this->tileSet->tile[index]);
                 tile.setPosition(sf::Vector2f(x * this->tileSet->tileWidth, y * this->tileSet->tileHeight));
