@@ -18,22 +18,103 @@ Map::Map() {
     this->tileSet = new TileSet();
 }
 
-void Map::RenderGround(sf::RenderWindow* window) {
+void Map::CheckCollision(sf::RenderWindow *window, Entity *entity) {
+    // Get check section
+    sf::Vector2f checkWidth = sf::Vector2f(
+        (int)entity->getPosition().x / this->tileSet->tileWidth,
+        (int)entity->getPosition().x / this->tileSet->tileWidth + 3
+    );
+    sf::Vector2f checkHeight = sf::Vector2f(
+        (int)entity->getPosition().y / this->tileSet->tileWidth,
+        (int)entity->getPosition().y / this->tileSet->tileWidth + 3
+    );
+
+    // Check collision
+    int index;
+    bool collided = false;
+    for (int y = checkHeight.x; y < checkHeight.y; y++) {
+        for (int x = checkWidth.x; x < checkWidth.y; x++) {
+            index = this->collision->data[y][x];
+            // If collision tile
+            if(index != 0) {
+                if (entity->getGlobalBounds().intersects(sf::FloatRect(x * this->tileSet->tileWidth,
+                                                                       y * this->tileSet->tileHeight,
+                                                                       this->tileSet->tileWidth,
+                                                                       this->tileSet->tileHeight))) {
+                    collided = true;
+                }
+            }
+        }
+    }
+
+    // Move back if entity collided)
+    if(collided) {
+        // DOWN_RIGHT
+        if(entity->velocity.x > 0
+        && entity->velocity.y > 0) {
+            entity->velocity.x -= entity->velocity.x * 2;
+            entity->velocity.y = 0;
+        }
+        // UP_RIGHT
+        else if(entity->velocity.x > 0
+        && entity->velocity.y < 0) {
+            entity->velocity.x = 0;
+            entity->velocity.y -= entity->velocity.y * 2;
+        }
+        // UP_LEFT
+        else if(entity->velocity.x < 0
+        && entity->velocity.y < 0) {
+            entity->velocity.x = 0;
+            entity->velocity.y -= entity->velocity.y * 2;
+        }
+        // DOWN_LEFT
+        else if(entity->velocity.x < 0
+        && entity->velocity.y > 0) {
+            entity->velocity.x -= entity->velocity.x * 2;
+            entity->velocity.y = 0;
+        }
+
+        // RIGHT
+        else if(entity->velocity.x > 0) {
+            entity->velocity.x -= entity->velocity.x * 2;
+        }
+        // LEFT
+        else if(entity->velocity.x < 0) {
+            entity->velocity.x -= entity->velocity.x * 2;
+        }
+        // DOWN
+        else if(entity->velocity.y > 0) {
+            entity->velocity.y -= entity->velocity.y * 2;
+        }
+        // UP
+        else if(entity->velocity.y < 0) {
+            entity->velocity.y -= entity->velocity.y * 2;
+        }
+
+        entity->move(entity->velocity.x, entity->velocity.y);
+    }
+}
+
+void Map::RenderGround(sf::RenderWindow *window) {
     Layer* layer = this->ground1;
     this->Render(window, layer);
 }
 
-void Map::RenderAbove(sf::RenderWindow* window) {
+void Map::RenderAbove(sf::RenderWindow *window) {
     Layer* layer = this->above1;
     this->Render(window, layer);
 }
 
-void Map::Render(sf::RenderWindow* window, Layer *layer) {
+void Map::Render(sf::RenderWindow *window, Layer *layer) {
     // Get render section
-    sf::Vector2f renderWidth = sf::Vector2f((window->getView().getCenter().x - window->getSize().x / 2) / this->tilewidth,
-                                       (window->getView().getCenter().x + window->getSize().x / 2) / this->tilewidth);
-    sf::Vector2f renderHeight = sf::Vector2f((window->getView().getCenter().y - window->getSize().y / 2) / this->tileheight,
-                                       (window->getView().getCenter().y + window->getSize().y / 2) / this->tileheight);
+    sf::Vector2f renderWidth = sf::Vector2f(
+        (window->getView().getCenter().x - window->getSize().x / 2) / this->tileWidth,
+        (window->getView().getCenter().x + window->getSize().x / 2) / this->tileWidth
+    );
+    sf::Vector2f renderHeight = sf::Vector2f(
+        (window->getView().getCenter().y - window->getSize().y / 2) / this->tileHeight,
+        (window->getView().getCenter().y + window->getSize().y / 2) / this->tileHeight
+    );
 
     // Render map
     int index;

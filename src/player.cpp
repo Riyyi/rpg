@@ -10,8 +10,8 @@ Player::Player(EntityManager* entityManager, Map *map, Camera *camera, float x, 
     this->speed = 0.00015f;
 }
 
-void Player::Update(sf::RenderWindow* window, InputManager inputManager, int elapsedTime) {
-    float speed = this->speed * elapsedTime;
+void Player::Update(sf::RenderWindow* window, InputManager inputManager, int timeElapsed) {
+    float speed = this->speed * timeElapsed;
     // Update player velocity
     this->velocity.x = inputManager.IsPressed(InputManager::Right) * speed -
                        inputManager.IsPressed(InputManager::Left) * speed;
@@ -24,6 +24,10 @@ void Player::Update(sf::RenderWindow* window, InputManager inputManager, int ela
         this->velocity.x *= .75;
         this->velocity.y *= .75;
     }
+}
+
+float Player::GetSpeed() {
+    return this->speed;
 }
 
 Player::~Player()

@@ -5,6 +5,8 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 
+#include "entity.h"
+
 class Layer
 {
 public:
@@ -53,12 +55,11 @@ class Map
 {
 public:
     Map();
-    void RenderGround(sf::RenderWindow* window);
-    void RenderAbove(sf::RenderWindow* window);
+    void CheckCollision(sf::RenderWindow *window, Entity *entity);
+    void RenderGround(sf::RenderWindow *window);
+    void RenderAbove(sf::RenderWindow *window);
     ~Map();
 
-
-    // Global
     int height;
     Layer* ground1;
     Layer* above1;
@@ -70,14 +71,14 @@ public:
 
 //       },
 //    "renderorder":"right-down",
-    int tileheight;
+    int tileHeight;
     TileSet* tileSet;
-    int tilewidth;
+    int tileWidth;
 //    "version":1,
     int width;
 
 private:
-    void Render(sf::RenderWindow* window, Layer *layer);
+    void Render(sf::RenderWindow *window, Layer *layer);
 };
 
 //sf::Sprite* sprite;

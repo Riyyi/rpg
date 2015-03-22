@@ -13,10 +13,11 @@ class Player : public Entity
 {
 public:
     Player(EntityManager* entityManager, Map* map, Camera* camera, float x = 0, float y = 0);
-    void Update(sf::RenderWindow *window, InputManager inputManager, int elapsedTime);
+    void Update(sf::RenderWindow *window, InputManager inputManager, int timeElapsed);
     float SetSpeed();
     int GetHealth();
     int GetMaxHealth();
+    float GetSpeed();
     ~Player();
 
 private:

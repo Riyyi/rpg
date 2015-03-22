@@ -125,9 +125,9 @@ void MapLoad::LoadMap(const rapidjson::Document& document, Map *map) {
     // MAP
     map->height = document["layers"][0]["height"].GetInt();
     // Layer
-    map->tileheight = document["tileheight"].GetInt();
+    map->tileHeight = document["tileheight"].GetInt();
     // TileSet
-    map->tilewidth = document["tilewidth"].GetInt();
+    map->tileWidth = document["tilewidth"].GetInt();
     map->width = document["layers"][0]["width"].GetInt();
 }
 
