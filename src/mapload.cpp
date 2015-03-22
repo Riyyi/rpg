@@ -52,8 +52,20 @@ void MapLoad::LoadLayer(const rapidjson::Document& document, Map *map) {
         if(document["layers"][i]["properties"]["name"] == "Ground1") {
             current = map->ground1;
         }
+        else if(document["layers"][i]["properties"]["name"] == "Ground2") {
+            current = map->ground2;
+        }
+        else if(document["layers"][i]["properties"]["name"] == "Ground3") {
+            current = map->ground3;
+        }
         else if(document["layers"][i]["properties"]["name"] == "Above1") {
             current = map->above1;
+        }
+        else if(document["layers"][i]["properties"]["name"] == "Above2") {
+            current = map->above2;
+        }
+        else if(document["layers"][i]["properties"]["name"] == "Above3") {
+            current = map->above3;
         }
         if(document["layers"][i]["properties"]["name"] == "Collision") {
             current = map->collision;

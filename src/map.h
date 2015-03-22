@@ -55,14 +55,18 @@ class Map
 {
 public:
     Map();
-    void CheckCollision(sf::RenderWindow *window, Entity *entity);
+    void CheckCollision(Entity *entity);
     void RenderGround(sf::RenderWindow *window);
     void RenderAbove(sf::RenderWindow *window);
     ~Map();
 
     int height;
     Layer* ground1;
+    Layer* ground2;
+    Layer* ground3;
     Layer* above1;
+    Layer* above2;
+    Layer* above3;
     Layer* collision;
 //    "nextobjectid":1,
 //    "orientation":"orthogonal",

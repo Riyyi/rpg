@@ -34,7 +34,7 @@ void MainGame::Update(sf::RenderWindow* window) {
 
     this->player->Update(window, inputManager, timeElapsed);
     this->entityManager->Update();
-    this->map->CheckCollision(window, this->player);
+    this->map->CheckCollision(this->player);
     this->camera->Update(window, this->map, sf::Vector2f(this->player->getPosition().x, this->player->getPosition().y));
 
     if(inputManager.IsPressed(InputManager::LoadMap)) {

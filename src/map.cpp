@@ -13,12 +13,16 @@ TileSet::~TileSet() {
 
 Map::Map() {
     this->ground1 = new Layer();
+    this->ground2 = new Layer();
+    this->ground3 = new Layer();
     this->above1 = new Layer();
+    this->above2 = new Layer();
+    this->above3 = new Layer();
     this->collision = new Layer();
     this->tileSet = new TileSet();
 }
 
-void Map::CheckCollision(sf::RenderWindow *window, Entity *entity) {
+void Map::CheckCollision(Entity *entity) {
     // Get check section
     sf::Vector2f checkWidth = sf::Vector2f(
         (int)entity->getPosition().x / this->tileSet->tileWidth,
@@ -98,10 +102,22 @@ void Map::CheckCollision(sf::RenderWindow *window, Entity *entity) {
 void Map::RenderGround(sf::RenderWindow *window) {
     Layer* layer = this->ground1;
     this->Render(window, layer);
+
+    layer = this->ground2;
+    this->Render(window, layer);
+
+    layer = this->ground3;
+    this->Render(window, layer);
 }
 
 void Map::RenderAbove(sf::RenderWindow *window) {
     Layer* layer = this->above1;
+    this->Render(window, layer);
+
+    layer = this->above2;
+    this->Render(window, layer);
+
+    layer = this->above3;
     this->Render(window, layer);
 }
 
@@ -134,6 +150,10 @@ void Map::Render(sf::RenderWindow *window, Layer *layer) {
 Map::~Map() {
     delete this->tileSet;
     delete this->ground1;
+    delete this->ground2;
+    delete this->ground3;
     delete this->above1;
+    delete this->above2;
+    delete this->above3;
     delete this->collision;
 }
