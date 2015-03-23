@@ -92,6 +92,17 @@ void Camera::Update(sf::RenderWindow *window, Map *map, sf::Vector2f position) {
     }
 }
 
+bool Camera::IsOnScreen(sf::RenderWindow *window, Entity *entity) {
+    if(entity->getPosition().x + entity->getGlobalBounds().width / 2 > this->view.getCenter().x - window->getSize().x / 2
+    && entity->getPosition().x - entity->getGlobalBounds().width / 2 < this->view.getCenter().x + window->getSize().x / 2
+    && entity->getPosition().y + entity->getGlobalBounds().height / 2 > this->view.getCenter().y - window->getSize().y / 2
+    && entity->getPosition().y - entity->getGlobalBounds().height / 2 < this->view.getCenter().y + window->getSize().y / 2) {
+        return true;
+    }
+
+    return false;
+}
+
 Camera::~Camera()
 {
 

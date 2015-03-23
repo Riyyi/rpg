@@ -35,63 +35,85 @@ void Map::CheckCollision(Entity *entity) {
 
     // Check collision
     int index;
+    sf::Sprite tile;
     bool collided = false;
+    sf::Vector2i collidedTile;
     for (int y = checkHeight.x; y < checkHeight.y; y++) {
         for (int x = checkWidth.x; x < checkWidth.y; x++) {
             index = this->collision->data[y][x];
             // If collision tile
             if(index != 0) {
-                if (entity->getGlobalBounds().intersects(sf::FloatRect(x * this->tileSet->tileWidth,
-                                                                       y * this->tileSet->tileHeight,
-                                                                       this->tileSet->tileWidth,
-                                                                       this->tileSet->tileHeight))) {
+                tile.setTexture(*this->tileSet->tile[index]);
+                tile.setPosition(sf::Vector2f(x * this->tileSet->tileWidth, y * this->tileSet->tileHeight));
+                // Rotate oblique collisions
+//                if(i == 1) {
+//                    switch(x) {
+//                        case 3:
+//                            break;
+
+//                        case 4:
+//                            break;
+
+//                        case 5:
+//                            break;
+//                    }
+//                }
+                if (tile.getGlobalBounds().intersects(entity->getGlobalBounds())) {
                     collided = true;
+                    collidedTile.x = x;
+                    collidedTile.y = y;
+                    break;
                 }
             }
         }
     }
 
-    // Move back if entity collided)
+    // Move back if entity collided
     if(collided) {
+        // Get Entities center x, y position;
+        sf::Vector2f entityCenter = sf::Vector2f(
+            (int)((entity->getPosition().x + entity->getGlobalBounds().width / 2) / this->tileSet->tileWidth),
+            (int)((entity->getPosition().y + entity->getGlobalBounds().height / 2) / this->tileSet->tileHeight)
+        );
+
         // DOWN_RIGHT
-        if(entity->velocity.x > 0
-        && entity->velocity.y > 0) {
-            entity->velocity.x -= entity->velocity.x * 2;
-            entity->velocity.y = 0;
+        if(collidedTile.x > entityCenter.x + 1
+        && collidedTile.y > entityCenter.y + 1) {
+
         }
         // UP_RIGHT
-        else if(entity->velocity.x > 0
-        && entity->velocity.y < 0) {
-            entity->velocity.x = 0;
-            entity->velocity.y -= entity->velocity.y * 2;
+        else if(collidedTile.x > entityCenter.x + 1
+        && collidedTile.y < entityCenter.y - 1) {
+
         }
         // UP_LEFT
-        else if(entity->velocity.x < 0
-        && entity->velocity.y < 0) {
-            entity->velocity.x = 0;
-            entity->velocity.y -= entity->velocity.y * 2;
+        else if(collidedTile.x < entityCenter.x - 1
+        && collidedTile.y < entityCenter.y - 1) {
+
         }
         // DOWN_LEFT
-        else if(entity->velocity.x < 0
-        && entity->velocity.y > 0) {
-            entity->velocity.x -= entity->velocity.x * 2;
-            entity->velocity.y = 0;
+        else if(collidedTile.x < entityCenter.x - 1
+        && collidedTile.y > entityCenter.y + 1) {
         }
 
         // RIGHT
-        else if(entity->velocity.x > 0) {
+        if(collidedTile.x > entityCenter.x
+        && collidedTile.y == entityCenter.y) {
             entity->velocity.x -= entity->velocity.x * 2;
         }
         // LEFT
-        else if(entity->velocity.x < 0) {
-            entity->velocity.x -= entity->velocity.x * 2;
+        if(collidedTile.x < entityCenter.x
+        && collidedTile.y == entityCenter.y) {
+
         }
         // DOWN
-        else if(entity->velocity.y > 0) {
-            entity->velocity.y -= entity->velocity.y * 2;
+        if(collidedTile.x == entityCenter.x
+        && collidedTile.y > entityCenter.y) {
+
         }
         // UP
-        else if(entity->velocity.y < 0) {
+        if(collidedTile.x == entityCenter.x
+        && collidedTile.y < entityCenter.y) {
             entity->velocity.y -= entity->velocity.y * 2;
         }
 
@@ -119,6 +141,9 @@ void Map::RenderAbove(sf::RenderWindow *window) {
 
     layer = this->above3;
     this->Render(window, layer);
+
+//    layer = this->collision;
+//    this->Render(window, layer);
 }
 
 void Map::Render(sf::RenderWindow *window, Layer *layer) {

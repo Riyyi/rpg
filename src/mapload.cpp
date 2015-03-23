@@ -47,7 +47,7 @@ void MapLoad::Parser(std::string *content, rapidjson::Document *document) {
 void MapLoad::LoadLayer(const rapidjson::Document& document, Map *map) {
     int loopCount = document["layers"].Size();
     Layer* current;
-    for(unsigned int i = 0; i < loopCount; i++) {
+    for(int i = 0; i < loopCount; i++) {
         current = NULL;
         if(document["layers"][i]["properties"]["name"] == "Ground1") {
             current = map->ground1;
@@ -108,27 +108,34 @@ void MapLoad::LoadTileSet(const rapidjson::Document& document, Map *map) {
     map->tileSet->tileHeight = document["tilesets"][0]["tileheight"].GetInt();
     map->tileSet->tileWidth = document["tilesets"][0]["tilewidth"].GetInt();
 
-    int height = map->tileSet->imageHeight / map->tileSet->tileHeight;
-    int width = map->tileSet->imageWidth / map->tileSet->tileWidth;
+    int height;
+    int width;
 
     // Add NULL texture to fill position '0'
     sf::Texture* texture = new sf::Texture();
     map->tileSet->tile.push_back(texture);
 
-    // Load map tilesheet
-    std::string tileSheetLocation = map->tileSet->image;
-    tileSheetLocation.replace(0, 2, "data");
-    sf::Image tileSheet;
-    tileSheet.loadFromFile(tileSheetLocation);
-    tileSheet.createMaskFromColor(sf::Color::White);
-    for(int y = 0; y < height; y++) {
-        for(int x = 0; x < width; x++) {
-            sf::Texture* texture = new sf::Texture();
-            texture->loadFromImage(tileSheet, sf::IntRect(x * map->tileSet->tileWidth,
-                                                          y * map->tileSet->tileHeight,
-                                                          map->tileSet->tileWidth,
-                                                          map->tileSet->tileHeight));
-            map->tileSet->tile.push_back(texture);
+    int loopCount = document["tilesets"].Size();
+    for(int i = 0; i < loopCount; i++) {
+
+        height = document["tilesets"][i]["imageheight"].GetInt() / document["tilesets"][i]["tileheight"].GetInt();
+        width = document["tilesets"][i]["imagewidth"].GetInt() / document["tilesets"][i]["tilewidth"].GetInt();
+
+        // Load map tilesheet
+        std::string tileSheetLocation = document["tilesets"][i]["image"].GetString();
+        tileSheetLocation.replace(0, 2, "data");
+        sf::Image tileSheet;
+        tileSheet.loadFromFile(tileSheetLocation);
+        tileSheet.createMaskFromColor(sf::Color::White);
+        for(int y = 0; y < height; y++) {
+            for(int x = 0; x < width; x++) {
+                sf::Texture* texture = new sf::Texture();
+                texture->loadFromImage(tileSheet, sf::IntRect(x * document["tilesets"][i]["tilewidth"].GetInt(),
+                                                              y * document["tilesets"][i]["tileheight"].GetInt(),
+                                                              document["tilesets"][i]["tilewidth"].GetInt(),
+                                                              document["tilesets"][i]["tileheight"].GetInt()));
+                map->tileSet->tile.push_back(texture);
+            }
         }
     }
 }

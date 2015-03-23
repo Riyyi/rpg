@@ -1,5 +1,4 @@
 #include <iostream>
-#include <SFML/Graphics.hpp>
 
 #include "state/maingame.h"
 
@@ -29,12 +28,10 @@ int main()
     sf::Time timeElapsed;
 
     // Run the program as long as the window is open
-    while (window.isOpen())
-    {
+    while (window.isOpen()) {
         // Check all the window's events that were triggered since the last iteration of the loop
         sf::Event event;
-        while (window.pollEvent(event))
-        {
+        while (window.pollEvent(event)) {
             // Close window : exit
             if (event.type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
                 window.close();

@@ -59,7 +59,6 @@ public:
         }
     }
 
-
 private:
     sf::RenderWindow* window;
     GameState* state;

@@ -59,12 +59,12 @@ void EntityManager::Update() {
 }
 
 
-void EntityManager::Render(sf::RenderWindow* window) {
-    for (auto& iterator : this->entities) {
-        if (iterator.second != NULL) {
-            if (iterator.second->Active()) {
-                window->draw(*iterator.second);
-            }
+void EntityManager::Render(sf::RenderWindow* window, Camera *camera) {
+    for(auto& iterator : this->entities) {
+        if(iterator.second != NULL
+        && iterator.second->Active()
+        && camera->IsOnScreen(window, iterator.second)) {
+            window->draw(*iterator.second);
         }
     }
 }

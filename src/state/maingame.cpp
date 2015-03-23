@@ -37,15 +37,21 @@ void MainGame::Update(sf::RenderWindow* window) {
     this->map->CheckCollision(this->player);
     this->camera->Update(window, this->map, sf::Vector2f(this->player->getPosition().x, this->player->getPosition().y));
 
-    if(inputManager.IsPressed(InputManager::LoadMap)) {
+    // Reloading of the map
+    if(inputManager.IsPressed(InputManager::LoadMap)
+    && inputManager.IsKeyBoardPressed(sf::Keyboard::LControl)) {
         std::cout << "Loading Map..." << std::endl;
+        MapLoad(this->map, "data/map/level1.json", 0);
+    }
+    else if(inputManager.IsPressed(InputManager::LoadMap)) {
+        std::cout << "Updating Map..." << std::endl;
         MapLoad(this->map, "data/map/level1.json", 1);
     }
 }
 
 void MainGame::Render(sf::RenderWindow* window) {
     this->map->RenderGround(window);
-    this->entityManager->Render(window);
+    this->entityManager->Render(window, this->camera);
     this->map->RenderAbove(window);
 }
 

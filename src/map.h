@@ -60,6 +60,19 @@ public:
     void RenderAbove(sf::RenderWindow *window);
     ~Map();
 
+    enum Direction
+    {
+        NONE = -1,
+        LEFT = 0,
+        RIGHT = 1,
+        UP = 2,
+        DOWN = 3,
+        TOP_LEFT = 4,
+        TOP_RIGHT = 5,
+        BOTTOM_LEFT = 6,
+        BOTTOM_RIGHT = 7
+    };
+
     int height;
     Layer* ground1;
     Layer* ground2;

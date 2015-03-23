@@ -12,6 +12,7 @@ public:
     void MoveCamera(sf::RenderWindow *window, sf::Vector2f move);
     void SetCenter(sf::RenderWindow *window, sf::Vector2f position);
     void Update(sf::RenderWindow *window, Map *map, sf::Vector2f position);
+    bool IsOnScreen(sf::RenderWindow *window, Entity *entity);
     ~Camera();
 
 private:
