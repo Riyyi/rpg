@@ -13,3 +13,4 @@
 ### Art
 
 - [The Legend of Zelda - Link to the Past Tilesheet](http://www.spriters-resource.com/snes/legendofzeldaalinktothepast/sheet/7640/)
+- [The Legend of Zelda - Link to the Past Tilesheet 2](http://www.eclipseorigins.com/community/index.php?/topic/120791-zelda-link-to-the-past-tilesets/)
