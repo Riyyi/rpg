@@ -1,8 +1,6 @@
 # User config between these lines
 # ------------------------------------------
 
-# Set engine name
-set(ENGINE "unnamed")
 # Set project name
 set(GAME "rpg")
 # Set debugging, ON/OFF
@@ -51,9 +49,6 @@ include_directories(
 	"deps/SFML/include"
 )
 
-# file(GLOB_RECURSE SFML "deps/SFML/src/*.cpp")
-# set(ENGINE_SOURCES ${SFML})
-
 # Define game source files
 file(GLOB_RECURSE GAME_SOURCES "src/*.cpp")
 set(GAME_SOURCES ${GAME_SOURCES})
@@ -72,48 +67,5 @@ set(SFML_USE_SYSTEM_DEPS OFF CACHE BOOL "" FORCE)
 # Add SFML target to project
 add_subdirectory(deps/SFML)
 
-# set (SFML_DIR "${CMAKE_SOURCE_DIR}/deps/SFML")
-# set (CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/deps/SFML/cmake")
-# find_package (SFML 2.5.1 COMPONENTS system window graphics network audio REQUIRED)
-
 add_executable(${GAME} ${GAME_SOURCES})
 target_link_libraries(${GAME} sfml-system sfml-window sfml-network sfml-graphics sfml-audio)
-
-# ------------------------------------------------------------------------
-
-# file(GLOB_RECURSE SFML "deps/SFML/src/*.cpp")
-# set(ENGINE_SOURCES ${SFML})
-
-# # Define game source files
-# file(GLOB_RECURSE GAME_SOURCES "src/*.cpp")
-# set(GAME_SOURCES ${GAME_SOURCES})
-
-# # ------------------------------------------
-
-# project(${ENGINE})
-# set(CMAKE_CXX_STANDARD 11)
-
-# # SFML options
-# set(BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
-# set(SFML_BUILD_DOC OFF CACHE BOOL "" FORCE)
-# set(SFML_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
-# set(SFML_USE_SYSTEM_DEPS OFF CACHE BOOL "" FORCE)
-
-# # Add SFML target to project
-# add_subdirectory(deps/SFML)
-
-# # set (SFML_DIR "${CMAKE_SOURCE_DIR}/deps/SFML")
-# # set (CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/deps/SFML/cmake")
-# # find_package (SFML 2.5.1 COMPONENTS system window graphics network audio REQUIRED)
-
-
-# add_library(${ENGINE} STATIC ${ENGINE_SOURCES})
-# target_link_libraries(${ENGINE} sfml-system sfml-window sfml-network sfml-graphics sfml-audio)
-
-# # ------------------------------------------
-
-# project(${GAME})
-# set(CMAKE_CXX_STANDARD 11)
-
-# add_executable(${GAME} ${GAME_SOURCES})
-# target_link_libraries(${GAME} ${ENGINE})
