@@ -1,0 +1,92 @@
+#+TITLE: Simple RPG
+#+AUTHOR: Riyyi
+#+LANGUAGE: en
+#+OPTIONS: toc:nil
+
+Simple RPG game made in C++ and SFML.
+
+* Download
+
+** Clone
+
+#+BEGIN_SRC sh
+  $ git clone https://github.com/riyyi/rpg
+  $ cd rpg
+  $ git submodule init
+  $ git submodule update
+#+END_SRC
+Or
+#+BEGIN_SRC sh
+  $ git clone --recursive https://github.com/riyyi/rpg
+#+END_SRC
+
+** Update
+
+#+BEGIN_SRC sh
+  $ git pull
+  $ git submodule update --recursive
+#+END_SRC
+
+* Build instructions
+
+** Linux
+
+*** Prerequisites
+
+Install the dependencies:
+
+- [[https://www.sfml-dev.org/tutorials/2.5/compile-with-cmake.php#installing-dependencies][SFML]]
+
+*** Compile
+
+#+BEGIN_SRC shell-script
+$ mkdir build
+$ cd build
+$ cmake ..
+$ make
+#+END_SRC
+
+** Windows
+
+*** Prerequisites
+
+Download and extract build tools:
+
+- [[https://www.sfml-dev.org/download/sfml/2.5.1/][MinGW (64-bit)]] get the version recommended by SFML!
+- [[https://cmake.org/download/][CMake]]
+
+Add build tools to system PATH:
+
+- C:\mingw64\bin
+- C:\cmake\bin
+
+*** Compile
+
+#+BEGIN_SRC shell-script
+$ mkdir build
+$ cd build
+$ cmake -G "MinGW Makefiles" ..
+$ mingw32-make.exe
+#+END_SRC
+
+* Libraries
+
+- [[https://github.com/SFML/SFML][SFML]]
+- [[https://github.com/Tencent/rapidjson/][RapidJSON]]
+
+* References
+
+** Programming
+
+*** Book
+
+- Michael Dawson - Beginning C++ Through Game Programming, Third Edition - 2010
+
+*** Video
+
+- [[https://www.youtube.com/user/geraldmcalister/videos][https://www.youtube.com/user/geraldmcalister/videos]]
+
+** Art
+
+- [[http://www.spriters-resource.com/snes/legendofzeldaalinktothepast/sheet/7640/][The Legend of Zelda - Link to the Past Tilesheet]]
+- [[http://www.eclipseorigins.com/community/index.php?/topic/120791-zelda-link-to-the-past-tilesets/][The Legend of Zelda - Link to the Past Tilesheet 2]]
