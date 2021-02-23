@@ -1,23 +1,23 @@
-#+TITLE: Simple RPG
+#+TITLE: Simple 2D RPG
 #+AUTHOR: Riyyi
 #+LANGUAGE: en
 #+OPTIONS: toc:nil
 
-Simple RPG game made in C++ and SFML.
+Simple 2D RPG made in C++ and SFML.
 
 * Download
 
 ** Clone
 
 #+BEGIN_SRC sh
-  $ git clone https://github.com/riyyi/rpg
+  $ git clone https://<git>.com/riyyi/rpg
   $ cd rpg
   $ git submodule init
   $ git submodule update
 #+END_SRC
 Or
 #+BEGIN_SRC sh
-  $ git clone --recursive https://github.com/riyyi/rpg
+  $ git clone --recursive https://<git>.com/riyyi/rpg
 #+END_SRC
 
 ** Update
