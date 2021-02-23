@@ -1,0 +1,6 @@
+[submodule "deps/rapidjson"]
+	path = deps/rapidjson
+	url = https://github.com/Tencent/rapidjson
+[submodule "deps/SFML"]
+	path = deps/SFML
+	url = https://github.com/SFML/SFML
